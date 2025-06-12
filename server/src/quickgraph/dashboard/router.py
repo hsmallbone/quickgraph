@@ -672,7 +672,7 @@ async def get_download_endpoint(
             # "flags": user_flags,
         }
 
-    return output
+    #return output
 
     output = defaultdict(lambda: defaultdict(dict))
     # for m in markup:
@@ -694,17 +694,17 @@ async def get_download_endpoint(
                     if m["classification"] == "entity"
                 ]
 
-                # entityId2Index = {
-                #     str(e["id"]): idx for idx, e in enumerate(entity_markup)
-                # }
+                entityId2Index = {
+                    str(e["id"]): idx for idx, e in enumerate(entity_markup)
+                }
 
                 relation_markup = [
                     {
                         "id": str(m["_id"]),
                         "source_id": str(m["source_id"]),
                         "target_id": str(m["target_id"]),
-                        # "head": entityId2Index[str(m["source_id"])],
-                        # "tail": entityId2Index[str(m["target_id"])],
+                        "head": entityId2Index[str(m["source_id"])],
+                        "tail": entityId2Index[str(m["target_id"])],
                         "label": ontology_id2fullname.get(m["ontology_item_id"]),
                         "annotator": username,
                     }
@@ -752,6 +752,7 @@ async def get_download_endpoint(
                         "relations": relation_markup,
                         "flags": user_flags,
                     }
+    
 
     except Exception as e:
         logger.info(f"Exception: {e}")
