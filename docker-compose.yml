@@ -4,6 +4,8 @@ services:
     build:
      context: ./server
      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
     depends_on:
       - mongodb
     environment:
@@ -22,13 +24,11 @@ services:
       - server
       - docs
     environment:
-      - VITE_API_BASE_URL=http://server:8000/api
-      - VITE_DOC_BASE_URL=http://docs:4000
+      - VITE_API_BASE_URL=http://localhost:8000/api
+      - VITE_DOC_BASE_URL=http://localhost:4000
 
   mongodb:
     image: docker.io/mongo:latest
-    ports:
-      - "27018:27017"
     volumes:
       - mongodb_data:/data/db:z
     environment:
